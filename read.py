@@ -15,3 +15,11 @@ sum_len = 0
 for d in data: #從清單中調出每筆資料的長度
     sum_len = sum_len + len(d) #加總全部資料長度
 print ('留言的平均長度為', sum_len/len(data)) #已知共有1000000筆資料
+
+new = []
+for d in data: #篩選資料
+	if len(d) < 100: #建立條件
+		new.append(d) #鍵入新的清單
+print('一共有', len(new), '筆留言長度小於100')
+print(new[0])
+print(new[1])
