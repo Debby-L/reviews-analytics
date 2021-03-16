@@ -1,13 +1,18 @@
+import time
+import progressbar
+
+
 #讀取檔案
 #利用計數器執行每1000筆為一單位，讀取資料
 data = []
 count = 0
+bar = progressbar.ProgressBar(max_value=1000000) 
 with open ('reviews.txt', 'r') as f:
 	for line in f:
 		data.append(line)
 		count += 1
-		if count % 1000 == 0: #設定1000的餘數等於0
-		   print(len(data))
+		bar.update(count)
+		
 
 print('檔案讀取完了, 總共有', len(data), '筆資料')
 
@@ -20,11 +25,11 @@ print ('留言的平均長度為', sum_len/len(data)) #已知共有1000000筆資
 
 new = []
 for d in data: #篩選資料
-	if len(d) < 100: #建立條件
-		new.append(d) #鍵入新的清單
-print('一共有', len(new), '筆留言長度小於100')
-print(new[0])
-print(new[1])
+	if len(d) < 100: #建立條件"設定留言長度小於100"
+		new.append(d) #將找出的留言建立成為新的清單
+print('一共有', len(new), '筆留言長度小於100') #印出有幾筆
+print(new[0]) #挑選新清單其中第一項
+print(new[1]) #挑選新清單其中第二項
 
 good = [] 
 for d in data:
@@ -46,7 +51,8 @@ bad = ['bad' in d for d in data]
 
 
 #文字計數
-
+#加入計時 import time-->加入模組
+start_time = time.time() #設定查詢資料起始時間
 wc = {} #word count
 for d in data: #d=留言
 	words = d.split(' ') #分割每個字，split本身預設值就是空白鍵，不寫也沒關係，而且可以避免'空字串'被算進次數
@@ -62,7 +68,10 @@ for word in wc:
 		print(word, wc[word])
 
 print(len(wc)) #字典的長度
-	
+end_time = time.time() #設定查詢資料結束時間
+print('花了', end_time - start_time, 'second') #計算時計花時間
+
+
 while True:
 	word = input('請問你想查甚麼字:')
 	if word == 'q':
